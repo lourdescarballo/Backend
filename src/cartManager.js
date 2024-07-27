@@ -45,7 +45,6 @@ export class CartManager {
 
         if (index !== -1){
             const cartProducts = await this.getCartProducts(cart_id)
-            // const cartProducts = carts[index].products || [];
             const existingProductIndex = cartProducts.findIndex(product => product.product_id === product_id)
 
             if(existingProductIndex !== -1){

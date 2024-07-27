@@ -42,30 +42,30 @@ getProductsById = async (id) => {
     }
 
     updateProduct = async (id, {...data}) => {
-        const products = await this.getProducts(); // Usa 'products' para obtener la lista de productos
+        const products = await this.getProducts(); 
         const index = products.findIndex(product => product.id === id);
     
         if (index !== -1) {
-            products[index] = { id, ...data }; // Actualiza el producto en el índice correcto
+            products[index] = { id, ...data };  correcto
             await fs.writeFile(this.path, JSON.stringify(products));
             return products[index];
         } else {
             console.log('Producto no encontrado');
-            return null; // Retorna null si el producto no se encuentra
+            return null; 
         }
     }
     
     deleteProduct = async (id) => {
-        const products = await this.getProducts(); // Usa 'products' para obtener la lista de productos
+        const products = await this.getProducts();
         const index = products.findIndex(product => product.id === id);
     
         if (index !== -1) {
             products.splice(index, 1);
             await fs.writeFile(this.path, JSON.stringify(products));
-            return true; // Retorna true si el producto se elimina con éxito
+            return true;
         } else {
             console.log('Producto no encontrado');
-            return false; // Retorna false si el producto no se encuentra
+            return false;
         }
     }
 

@@ -46,7 +46,7 @@ getProductsById = async (id) => {
         const index = products.findIndex(product => product.id === id);
     
         if (index !== -1) {
-            products[index] = { id, ...data };  correcto
+            products[index] = { id, ...data };
             await fs.writeFile(this.path, JSON.stringify(products));
             return products[index];
         } else {

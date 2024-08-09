@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Lista de productos en tiempo real</h1>
+        
+        <ul id="productList" class="list-group mb-4">
+            {{#each products}}
+            <li class="list-group-item">
+                <h2>{{this.title}}</h2>
+                <p><strong>Descripción:</strong> {{this.description}}</p>
+                <p><strong>Precio:</strong> ${{this.price}}</p>
+                <p><strong>Código:</strong> {{this.code}}</p>
+                <p><strong>Stock:</strong> {{this.stock}}</p>
+                <p><strong>Categoría:</strong> {{this.category}}</p>
+                <button class="btn btn-danger" onclick="deleteProduct('{{this.id}}')">Eliminar</button>
+            </li>
+            {{/each}}
+        </ul>
+
+        <h2 class="mb-3">Agregar Producto</h2>
+        <form id="addProductForm">
+            <div class="form-group">
+                <input type="text" class="form-control" id="title" placeholder="Título" required>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="description" placeholder="Descripción" required>
+            </div>
+            <div class="form-group">
+                <input type="number" class="form-control" id="price" placeholder="Precio" required>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="code" placeholder="Código" required>
+            </div>
+            <div class="form-group">
+                <input type="number" class="form-control" id="stock" placeholder="Stock" required>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="category" placeholder="Categoría" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Agregar Producto</button>
+        </form>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        // Agregar Producto
+        document.getElementById('addProductForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const newProduct = {
+                title: document.getElementById('title').value,
+                description: document.getElementById('description').value,
+                price: document.getElementById('price').value,
+                code: document.getElementById('code').value,
+                stock: document.getElementById('stock').value,
+                category: document.getElementById('category').value
+            };
+
+            socket.emit('addProduct', newProduct);
+
+            this.reset();
+        });
+
+        // Eliminar Producto
+        function deleteProduct(productId) {
+            socket.emit('deleteProduct', productId);
+        }
+
+        // Actualizar la lista de productos en tiempo real
+        socket.on('updateProducts', (products) => {
+            const productList = document.getElementById('productList');
+            productList.innerHTML = '';
+            products.forEach(product => {
+                const li = document.createElement('li');
+                li.className = 'list-group-item';
+                li.innerHTML = `
+                    <h2>${product.title}</h2>
+                    <p><strong>Descripción:</strong> ${product.description}</p>
+                    <p><strong>Precio:</strong> $${product.price}</p>
+                    <p><strong>Código:</strong> ${product.code}</p>
+                    <p><strong>Stock:</strong> ${product.stock}</p>
+                    <p><strong>Categoría:</strong> ${product.category}</p>
+                    <button class="btn btn-danger" onclick="deleteProduct('${product.id}')">Eliminar</button>
+                `;
+                productList.appendChild(li);
+            });
+        });
+    </script>
+</body>
+</html>
+

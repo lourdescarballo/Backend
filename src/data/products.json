@@ -1,0 +1,32 @@
+[
+  {
+    "id": "a46331c0-8bcb-4642-9bd4-f4ac7e70e85c",
+    "title": "camis",
+    "description": "fjfj",
+    "price": "234",
+    "code": "23345",
+    "stock": "456",
+    "category": "ropa"
+  },
+  {
+    "id": "1adcff0f-2d34-4053-9a63-18e947beaa90",
+    "title": "Camisa de Algodón",
+    "description": "Camiseta de algodón 100% con diseños únicos.",
+    "price": 25.99,
+    "code": "CAM789",
+    "stock": 50,
+    "status": true,
+    "category": "Ropa"
+  },
+  {
+    "id": "95fc63de-65c6-4216-9634-862224ef9753",
+    "title": "Camisa de fultbol",
+    "description": "Camiseta de lana 100% con diseños únicos.",
+    "code": "CAM9989",
+    "price": 25.99,
+    "status": true,
+    "stock": 50,
+    "category": "Ropa",
+    "thumbnails": []
+  }
+]
